@@ -72,18 +72,21 @@ const Carousel: FC<CarouselProps> = ({ images, current }) => (
   </div>
 );
 
-const Footer: FC = () => (
-  <footer className="fixed bottom-0 left-0 w-full p-4 text-center animate-fade-in-up">
-    <p>© 2024 Winxen Ryandiharvin. All rights reserved.</p>
-    <p>
-      <a
-        href="https://github.com/winxene"
-        className="hover:underline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        github.com/winxene
-      </a>
-    </p>
-  </footer>
-);
+const Footer: FC = () => {
+  const year = new Date().getFullYear();
+  return (
+    <footer className="fixed bottom-0 left-0 w-full p-4 text-center animate-fade-in-up">
+      <p>© {year} Winxen. All rights reserved.</p>
+      <p>
+        <a
+          href="https://github.com/winxene"
+          className="hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          github.com/winxene
+        </a>
+      </p>
+    </footer>
+  );
+};
