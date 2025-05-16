@@ -1,92 +1,90 @@
 "use client";
 
-import { useEffect, useState, FC } from "react";
-import Head from "next/head";
-import Image from "next/image";
+import { ReactNode, useEffect, useState } from "react";
+import PageLayout from "./page-layout";
 
-const constructionImages: string[] = [
-  "wip-1.svg",
-  "wip-2.svg",
-  "wip-3.svg",
-  "wip-4.svg",
-];
+type ReadmeCardProps = {
+  children: ReactNode;
+};
 
-export default function Home(): JSX.Element {
-  const [current, setCurrent] = useState<number>(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % constructionImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
+const ReadmeCard = ({ children }: ReadmeCardProps) => {
   return (
-    <>
-      <Head>
-        <title>Work in Progress | Winxen Ryandiharvin</title>
-        <meta
-          name="description"
-          content="This page is under construction. Work in progress, stay tuned for updates from Winxen Ryandiharvin."
-        />
-        <meta name="robots" content="index, follow" />
-      </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center p-24">
-        <div className="flex flex-col items-center">
-          <Carousel images={constructionImages} current={current} />
-          <h1 className="text-2xl font-bold text-center animate-fade-in-up mt-6">
-            Work in progress, stay tuned!
-          </h1>
-        </div>
-        <Footer />
-      </main>
-    </>
-  );
-}
-
-interface CarouselProps {
-  images: string[];
-  current: number;
-}
-
-const Carousel: FC<CarouselProps> = ({ images, current }) => (
-  <div className="mb-6 relative w-[300px] h-[300px] overflow-hidden">
-    {images.map((img, idx) => (
-      <Image
-        key={img}
-        src={img}
-        alt={`Construction Logo ${idx + 1}`}
-        width={300}
-        height={300}
-        priority={idx === current}
-        className={`absolute top-0 left-0 transition-transform duration-700 ease-in-out ${
-          idx === current
-            ? "translate-x-0 opacity-100 z-10"
-            : idx < current
-              ? "-translate-x-full opacity-0 z-0"
-              : "translate-x-full opacity-0 z-0"
-        }`}
-        style={{ pointerEvents: idx === current ? "auto" : "none" }}
-      />
-    ))}
-  </div>
-);
-
-const Footer: FC = () => {
-  const year = new Date().getFullYear();
-  return (
-    <footer className="fixed bottom-0 left-0 w-full p-4 text-center animate-fade-in-up">
-      <p>© {year} Winxen. All rights reserved.</p>
-      <p>
-        <a
-          href="https://github.com/winxene"
-          className="hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          github.com/winxene
-        </a>
-      </p>
-    </footer>
+    <div className="flex flex-col min-w-full mx-0 md:mx-24 2xl:mx-96 border border-suggestion rounded p-5">
+      <p className="text-subtitle text-xs md:text-sm py-4">README.md</p>
+      {children}
+    </div>
   );
 };
+
+const SpotifyEmbed = () => {
+  //add loading mechanism later on
+  return (
+    <iframe
+      className="rounded-xl"
+      src="https://open.spotify.com/embed/track/6wKmxUeMJAoz2GpMrw95z5?utm_source=generator&theme=0"
+      width="40%"
+      height="152"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+    ></iframe>
+  );
+};
+
+const AsciiArt = ({ src }: { src: string }) => {
+  const [asciiArt, setAsciiArt] = useState("");
+
+  const fetchAsciiArt = async (textSrc: String) => {
+    const response = await fetch(textSrc.toString());
+    if (!response.ok) {
+      throw new Error("Failed to fetch ASCII art");
+    }
+    const data = await response.text();
+    return data;
+  };
+
+  useEffect(() => {
+    fetchAsciiArt(src)
+      .then((data) => setAsciiArt(data))
+      .catch((error) => console.error(error));
+  }, [src]);
+
+  return (
+    <pre className="text-[8px] text-center md:text-xs whitespace-pre-wrap">
+      {asciiArt}
+    </pre>
+  );
+};
+
+const Home = () => {
+  return (
+    <PageLayout
+      title="Winxen's Portfolio Terminal"
+      contentDescription="Winxen personal website. Contains projects and information about me."
+    >
+      <ReadmeCard>
+        <div className="flex flex-col-reverse md:flex-row space-y-4 justify-center">
+          <div className="flex flex-col space-y-4 items-stretch">
+            <p>
+              A passionate <span className="text-link">computer engineer </span>
+              driven by tech innovation. Loves{" "}
+              <span className="text-title">
+                JRPG games, Computers, Mobile Apps, and IoT
+              </span>
+              . Currently learning mandarin and aiming to pass HSK 4.
+            </p>
+            <p> My This Week's top jams:</p>
+            <SpotifyEmbed />
+          </div>
+          <AsciiArt src="/ascii/nemu-miyao.txt" />
+        </div>
+        <p className="mt-20 mb-4">
+          This whole website is based on my terminal look which you can access
+          from my dotfiles. You can use the “interactive” terminal to navigate.
+          Type help to see accepted commands.
+        </p>
+      </ReadmeCard>
+    </PageLayout>
+  );
+};
+
+export default Home;
