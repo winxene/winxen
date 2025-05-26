@@ -18,7 +18,7 @@ const PageLayout = (props: PageLayoutProps) => {
           <meta name="description" content={props.contentDescription} />
           <meta name="robots" content="index, follow" />
         </Head>
-        <main className="flex min-h-screen min-w-screen flex-col items-center justify-center px-0 md:px-24 md:pt-24 2xl:px-96">
+        <main className="flex min-h-screen min-w-screen flex-col items-center justify-center px-0 md:px-24 md:pt-24 2xl:px-96 select-none">
           <Header />
           {props.children}
           <Footer />
