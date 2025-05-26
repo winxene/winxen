@@ -51,7 +51,7 @@ const AsciiArt = ({ src }: AsciiArtProps) => {
 
   return (
     <pre
-      className="text-[8px] text-center md:text-xs whitespace-pre-wrap cursor-pointer"
+      className="text-[7px] text-center lg:text-xs whitespace-pre-wrap cursor-pointer"
       onClick={handleToggle}
       title="Toggle color/plain"
     >
