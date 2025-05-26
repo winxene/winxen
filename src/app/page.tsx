@@ -5,6 +5,15 @@ import AsciiArt from "@/components/assets/AsciiArt";
 import SpotifyEmbed from "@/components/assets/SpotifyEmbed";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 
+const TerminalPane = () => {
+  return (
+    <div className="flex flex-col items-center justify-center max-w-screen p-4 bg-terminal text-primary">
+      <p className="text-lg">Welcome to my terminal!</p>
+      <p className="text-sm">Type "help" to see available commands.</p>
+    </div>
+  );
+};
+
 const Home = () => {
   return (
     <PageLayout
@@ -12,7 +21,7 @@ const Home = () => {
       contentDescription="Winxen personal website. Contains projects and information about me."
     >
       <ReadmeCard>
-        <div className="flex flex-col-reverse md:flex-row space-y-4 justify-center">
+        <div className="flex flex-col-reverse xl:flex-row space-y-4 space-x-0 xl:space-x-10 justify-center">
           <div className="flex flex-col space-y-4 text-left">
             <p>
               A passionate <span className="text-link">computer engineer </span>
@@ -22,7 +31,7 @@ const Home = () => {
               </span>
               . Currently learning mandarin and aiming to pass HSK 4.
             </p>
-            <div className="flex flex-col pt-0 md:pt-20 items-center space-y-0 md:space-y-10 md:items-start justify-center">
+            <div className="flex flex-col pt-0 xl:pt-20 items-center space-y-0 xl:space-y-10 xl:items-start justify-center">
               <p> My This Week's top jams:</p>
               <SpotifyEmbed />
             </div>
