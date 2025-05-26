@@ -4,15 +4,7 @@ import PageLayout from "./page-layout";
 import AsciiArt from "@/components/assets/AsciiArt";
 import SpotifyEmbed from "@/components/assets/SpotifyEmbed";
 import ReadmeCard from "@/components/ui/ReadmeCard";
-
-const TerminalPane = () => {
-  return (
-    <div className="flex flex-col items-center justify-center max-w-screen p-4 bg-terminal text-primary">
-      <p className="text-lg">Welcome to my terminal!</p>
-      <p className="text-sm">Type "help" to see available commands.</p>
-    </div>
-  );
-};
+import TerminalPane from "@/components/ui/TerminalPane";
 
 const Home = () => {
   return (
@@ -54,6 +46,7 @@ const Home = () => {
           to see accepted commands.
         </p>
       </ReadmeCard>
+      <TerminalPane />
     </PageLayout>
   );
 };
