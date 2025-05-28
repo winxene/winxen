@@ -1,4 +1,6 @@
-const SpotifyEmbed = () => {
+import { FC } from "react";
+
+const SpotifyEmbed: FC = () => {
   //add fetch to get number 1 this week played song on spotify
 
   //will try to split the logic to utils later on

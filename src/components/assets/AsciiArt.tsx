@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-type AsciiArtProps = {
+interface AsciiArtProps {
   src: string;
-};
+}
 
 const colorClasses = [
   "text-subtitle",
@@ -12,7 +12,7 @@ const colorClasses = [
   "text-link",
 ];
 
-const AsciiArt = ({ src }: AsciiArtProps) => {
+const AsciiArt: FC<AsciiArtProps> = ({ src }: AsciiArtProps) => {
   const [asciiArt, setAsciiArt] = useState<string[]>([]);
   const [visibleLines, setVisibleLines] = useState(0);
   const [isColor, setIsColor] = useState(false);
