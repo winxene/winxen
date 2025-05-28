@@ -73,7 +73,7 @@ export const useCommandExecutor = (props: UseCommandExecutorProps) => {
               type: "output",
               text: MESSAGES.HOME_CHANGED,
             });
-            router.push("/");
+            window.location.replace("/");
           } else if (args[0] === "..") {
             addOutput(props.setOutput, {
               type: "output",
