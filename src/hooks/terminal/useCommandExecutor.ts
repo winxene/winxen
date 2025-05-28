@@ -91,7 +91,7 @@ export const useCommandExecutor = ({
             ]);
             router.push("/not-found");
           }
-
+          setShowContent(false);
           break;
 
         case "pwd":
