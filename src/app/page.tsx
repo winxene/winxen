@@ -19,7 +19,7 @@ const Home: FC = () => {
         <ReadmeCard>
           <div className="flex flex-col-reverse xl:flex-row space-y-4 space-x-0 xl:space-x-10 justify-center">
             <div className="flex flex-col space-y-4 text-left">
-              <p>
+              <p className="text-sm md:text-base">
                 A passionate{" "}
                 <span className="text-link">computer engineer </span>
                 driven by tech innovation. Loves{" "}
@@ -29,13 +29,13 @@ const Home: FC = () => {
                 . Currently learning mandarin and aiming to pass HSK 4.
               </p>
               <div className="flex flex-col pt-0 xl:pt-20 items-center space-y-0 xl:space-y-10 xl:items-start justify-center">
-                <p> My This Week's top jams:</p>
+                <p className="text-sm md:text-base"> My This Week's top jams:</p>
                 <SpotifyEmbed />
               </div>
             </div>
             <AsciiArt src="/ascii/nemu-miyao.txt" />
           </div>
-          <p className="mb-4">
+          <p className="mb-4 text-sm md:text-base">
             This whole website is based on my terminal look which you can access
             from my{" "}
             <a

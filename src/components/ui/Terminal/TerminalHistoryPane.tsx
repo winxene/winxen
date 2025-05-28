@@ -15,26 +15,25 @@ const TerminalHistoryPane: FC<TerminalHistoryPaneProps> = ({
 }: TerminalHistoryPaneProps) => {
   if (text && output.length === 0) {
     return (
-      <div className="w-full max-h-96 overflow-y-auto space-y-1 mb-4">
+      <div className="w-full max-h-96 overflow-y-auto space-y-1 mb-4 text-sm md:text-base">
         <TerminalLine currentPath={currentPath} />
         <p className={"text-left text-sm text-primaryAlt"}>{`$ ${text}`}</p>
       </div>
     );
   } else {
     return (
-      <div className="w-full max-h-96 overflow-y-auto space-y-1">
+      <div className="w-full max-h-96 overflow-y-auto space-y-1 text-sm md:text-base">
         {output.map((line, index) => (
           <>
             {index % 2 === 0 && <TerminalLine currentPath={currentPath} />}
             <p
               key={index}
-              className={`text-left text-sm ${
-                line.type === "command"
-                  ? "text-primaryAlt"
-                  : line.type === "error"
-                    ? "text-error"
-                    : "text-suggestion"
-              }`}
+              className={`text-left text-sm ${line.type === "command"
+                ? "text-primaryAlt"
+                : line.type === "error"
+                  ? "text-error"
+                  : "text-suggestion"
+                }`}
             >
               {line.text}
             </p>
