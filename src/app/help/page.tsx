@@ -5,10 +5,11 @@ import { FC, useState } from "react";
 import PageLayout from "../page-layout";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 import TerminalHistoryPane from "@/components/ui/Terminal/TerminalHistoryPane";
+import { usePathname } from "next/navigation";
 
 const Help: FC = () => {
   const [showContent, setShowContent] = useState(true);
-  const path = "~/help";
+  const path = "~" + usePathname();
   return (
     <PageLayout
       title="Winxen's Portfolio Terminal"
