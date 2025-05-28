@@ -15,8 +15,8 @@ const Help: FC = () => {
       contentDescription="Winxen personal website. Contains projects and information about me."
     >
       {showContent && (
-        <>
-          <div className="items-start justify-center flex flex-col space-y-4 w-[70%]">
+        <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full">
+          <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%] mx-auto ">
             <TerminalHistoryPane currentPath={path} text="cd help" />
           </div>
           <ReadmeCard>
@@ -68,7 +68,7 @@ const Help: FC = () => {
               </ul>
             </div>
           </ReadmeCard>
-        </>
+        </div>
       )}
       <TerminalPane setShowContent={setShowContent} />
     </PageLayout>
