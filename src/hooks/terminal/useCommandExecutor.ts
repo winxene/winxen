@@ -13,6 +13,7 @@ interface UseCommandExecutorProps {
   setHistoryIndex: (index: number) => void;
   setInput: (input: string) => void;
   setShowAutocomplete: (show: boolean) => void;
+  setShowContent: (show: boolean) => void;
 }
 
 export const useCommandExecutor = ({
@@ -24,6 +25,7 @@ export const useCommandExecutor = ({
   setHistoryIndex,
   setInput,
   setShowAutocomplete,
+  setShowContent,
 }: UseCommandExecutorProps) => {
   const router = useRouter();
   const executeCommand = useCallback(
@@ -101,6 +103,7 @@ export const useCommandExecutor = ({
 
         case "clear":
           setOutput([]);
+          setShowContent(false);
           break;
 
         case "":
@@ -125,6 +128,7 @@ export const useCommandExecutor = ({
       setHistoryIndex,
       setInput,
       setShowAutocomplete,
+      setShowContent,
     ],
   );
 

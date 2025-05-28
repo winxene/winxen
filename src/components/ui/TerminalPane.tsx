@@ -7,7 +7,11 @@ import {
 } from "@/utils/terminal/terminalUtils";
 import { useState, useEffect, useRef } from "react";
 
-const TerminalPane = () => {
+interface TerminalPaneProps {
+  setShowContent: (show: boolean) => void;
+}
+
+const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   const [currentPath, setCurrentPath] = useState("~");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<OutputLine[]>([]);
@@ -33,6 +37,7 @@ const TerminalPane = () => {
     setHistoryIndex,
     setInput,
     setShowAutocomplete,
+    setShowContent,
   });
 
   const { handleInputChange, handleKeyDown } = useInputHandlers({
@@ -71,7 +76,7 @@ const TerminalPane = () => {
                 </a>
               </div>
             )}
-            <div
+            <p
               key={index}
               className={`text-left text-sm ${
                 line.type === "command"
@@ -82,7 +87,7 @@ const TerminalPane = () => {
               }`}
             >
               {line.text}
-            </div>
+            </p>
           </>
         ))}
       </div>
@@ -116,17 +121,22 @@ const TerminalPane = () => {
         </div>
       </div>
 
-      <div className="text-xs text-gray-500 mt-4">
-        Available commands: ls, cd, pwd, clear | Use Tab to accept suggestion |
-        Use ↑↓ for command history
+      <p className="text-xs text-gray-500 mt-4">
+        Type{" "}
+        <a href="/help" className="font-bold hover:text-linkAlt">
+          help
+        </a>{" "}
+        for command details | Use <span className="font-bold">Tab</span> to
+        accept suggestion | Use <span className="font-bold">↑↓ </span> for
+        command history
         {showAutocomplete && autocompleteOptions.length > 1 && (
-          <span>
+          <span className="font-bold">
             {" "}
             | Use ↑↓ to cycle suggestions ({autocompleteIndex + 1}/
             {autocompleteOptions.length})
           </span>
         )}
-      </div>
+      </p>
     </div>
   );
 };
