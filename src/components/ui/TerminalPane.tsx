@@ -4,8 +4,8 @@ import { OutputLine } from "@/types/terminal";
 import { getCurrentSuggestion } from "@/utils/terminal/terminalUtils";
 import { useState, useEffect, useRef } from "react";
 import TerminalLine from "./Terminal/TerminalLine";
-import { useSyncTerminalPath } from "@/hooks/terminal/useSyncTerminalPath";
 import TerminalHistoryPane from "./Terminal/TerminalHistoryPane";
+import { usePathname } from "next/navigation";
 
 interface TerminalPaneProps {
   setShowContent: (show: boolean) => void;
@@ -22,11 +22,16 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   const [autocompleteIndex, setAutocompleteIndex] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useSyncTerminalPath({ setCurrentPath });
+  const path = "~" + usePathname();
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
+    }
+    if (path === "~/") {
+      setCurrentPath("~");
+    } else {
+      setCurrentPath(path);
     }
   }, []);
 
