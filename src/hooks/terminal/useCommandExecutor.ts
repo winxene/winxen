@@ -1,6 +1,7 @@
 import { TERMINAL_CONFIG } from "@/constants/terminal/terminalConfig";
 import { OutputLine } from "@/types/terminal";
 import { getFullUrl } from "@/utils/terminal/terminalUtils";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 interface UseCommandExecutorProps {
@@ -24,6 +25,7 @@ export const useCommandExecutor = ({
   setInput,
   setShowAutocomplete,
 }: UseCommandExecutorProps) => {
+  const router = useRouter();
   const executeCommand = useCallback(
     (command: string) => {
       const trimmedCommand = command.trim();
@@ -64,24 +66,30 @@ export const useCommandExecutor = ({
               ...prev,
               { type: "output", text: "Changed to home directory" },
             ]);
+            router.push("/");
           } else if (args[0] === ".." || args[0] === "~") {
             setCurrentPath("~");
             setOutput((prev) => [
               ...prev,
               { type: "output", text: "Changed to home directory" },
             ]);
+            router.back();
           } else if (TERMINAL_CONFIG.endpoints.includes(args[0])) {
             setCurrentPath(args[0]);
             setOutput((prev) => [
               ...prev,
               { type: "output", text: `Changed to ${args[0]}` },
             ]);
+            const targetPath = args[0] === "~" ? "/" : `/${args[0]}`;
+            router.push(targetPath);
           } else {
             setOutput((prev) => [
               ...prev,
               { type: "error", text: `cd: ${args[0]}: No such directory` },
             ]);
+            router.push("/not-found");
           }
+
           break;
 
         case "pwd":
