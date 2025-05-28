@@ -1,13 +1,13 @@
 "use client";
 
+import { FC, useState } from "react";
 import PageLayout from "./page-layout";
 import AsciiArt from "@/components/assets/AsciiArt";
 import SpotifyEmbed from "@/components/assets/SpotifyEmbed";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 import TerminalPane from "@/components/ui/TerminalPane";
-import { useState } from "react";
 
-const Home = () => {
+const Home: FC = () => {
   const [showContent, setShowContent] = useState(true);
 
   return (

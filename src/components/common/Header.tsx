@@ -4,7 +4,7 @@ import { FC } from "react";
 
 const Header: FC = () => {
   return (
-    <header className="fixed min-w-full flex flex-row px-[20%] py-4 bg-bg space-x-5 md:space-x-auto justify-between items-center top-0 shadow-md animate-fade-in-up">
+    <header className="fixed min-w-full flex flex-row px-[20%] py-4 bg-bg space-x-5 md:space-x-auto justify-between items-center top-0 shadow-md">
       <a
         href="/"
         className="text-xl md:text-3xl font-bold text-title hover:text-titleAlt"

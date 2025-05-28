@@ -1,33 +1,36 @@
-import { TERMINAL_CONFIG } from "@/constants/terminal/terminalConfig";
+import {
+  TERMINAL_CONFIG,
+  MESSAGES,
+  TERMINAL_HOME_PATH,
+} from "@/constants/terminal/terminalConfig";
 import { OutputLine } from "@/types/terminal";
-import { getFullUrl } from "@/utils/terminal/terminalUtils";
+import { getFullPath } from "@/utils/terminal/terminalUtils";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-interface UseCommandExecutorProps {
+type SetStateFn<T> = React.Dispatch<React.SetStateAction<T>>;
+
+type CommandProps = {
   currentPath: string;
-  setCurrentPath: (path: string) => void;
-  setOutput: React.Dispatch<React.SetStateAction<OutputLine[]>>;
+  setOutput: SetStateFn<OutputLine[]>;
   commandHistory: string[];
-  setCommandHistory: React.Dispatch<React.SetStateAction<string[]>>;
+  setCommandHistory: SetStateFn<string[]>;
+};
+
+interface UseCommandExecutorProps extends CommandProps {
   setHistoryIndex: (index: number) => void;
   setInput: (input: string) => void;
   setShowAutocomplete: (show: boolean) => void;
   setShowContent: (show: boolean) => void;
 }
 
-export const useCommandExecutor = ({
-  currentPath,
-  setCurrentPath,
-  setOutput,
-  commandHistory,
-  setCommandHistory,
-  setHistoryIndex,
-  setInput,
-  setShowAutocomplete,
-  setShowContent,
-}: UseCommandExecutorProps) => {
+const addOutput = (setOutput: SetStateFn<OutputLine[]>, line: OutputLine) => {
+  setOutput((prev) => [...prev, line]);
+};
+
+export const useCommandExecutor = (props: UseCommandExecutorProps) => {
   const router = useRouter();
+
   const executeCommand = useCallback(
     (command: string) => {
       const trimmedCommand = command.trim();
@@ -35,101 +38,97 @@ export const useCommandExecutor = ({
 
       if (
         trimmedCommand &&
-        commandHistory[commandHistory.length - 1] !== trimmedCommand
+        props.commandHistory[props.commandHistory.length - 1] !== trimmedCommand
       ) {
-        setCommandHistory((prev) => [...prev, trimmedCommand]);
+        props.setCommandHistory((prev) => [...prev, trimmedCommand]);
       }
-      setHistoryIndex(-1);
 
-      setOutput((prev) => [
-        ...prev,
-        { type: "command", text: `${currentPath} $ ${trimmedCommand}` },
-      ]);
+      props.setHistoryIndex(-1);
+      props.setInput("");
+      props.setShowAutocomplete(false);
+
+      addOutput(props.setOutput, {
+        type: "command",
+        text: `$ ${trimmedCommand}`,
+      });
 
       switch (cmd.toLowerCase()) {
         case "ls":
-          if (currentPath === "~") {
-            setOutput((prev) => [
-              ...prev,
-              { type: "output", text: TERMINAL_CONFIG.endpoints.join("  ") },
-            ]);
+          if (props.currentPath === TERMINAL_HOME_PATH) {
+            addOutput(props.setOutput, {
+              type: "output",
+              text: TERMINAL_CONFIG.endpoints.join("  "),
+            });
           } else {
-            setOutput((prev) => [
-              ...prev,
-              { type: "output", text: "No items found in this directory" },
-            ]);
+            addOutput(props.setOutput, {
+              type: "output",
+              text: MESSAGES.NO_ITEMS,
+            });
           }
           break;
 
         case "cd":
           if (!args.length) {
-            setCurrentPath("~");
-            setOutput((prev) => [
-              ...prev,
-              { type: "output", text: "Changed to home directory" },
-            ]);
-            router.push("/");
-          } else if (args[0] === ".." || args[0] === "~") {
-            setCurrentPath("~");
-            setOutput((prev) => [
-              ...prev,
-              { type: "output", text: "Changed to home directory" },
-            ]);
+            addOutput(props.setOutput, {
+              type: "output",
+              text: MESSAGES.HOME_CHANGED,
+            });
+            window.location.replace("/");
+          } else if (args[0] === "..") {
+            addOutput(props.setOutput, {
+              type: "output",
+              text: MESSAGES.HOME_CHANGED,
+            });
             router.back();
           } else if (TERMINAL_CONFIG.endpoints.includes(args[0])) {
-            setCurrentPath(args[0]);
-            setOutput((prev) => [
-              ...prev,
-              { type: "output", text: `Changed to ${args[0]}` },
-            ]);
-            const targetPath = args[0] === "~" ? "/" : `/${args[0]}`;
+            addOutput(props.setOutput, {
+              type: "output",
+              text: MESSAGES.CHANGED_TO(args[0]),
+            });
+            const targetPath = `/${args[0]}`;
             router.push(targetPath);
           } else {
-            setOutput((prev) => [
-              ...prev,
-              { type: "error", text: `cd: ${args[0]}: No such directory` },
-            ]);
+            addOutput(props.setOutput, {
+              type: "error",
+              text: MESSAGES.NO_DIRECTORY(args[0]),
+            });
             router.push("/not-found");
           }
-
+          props.setShowContent(true);
           break;
 
         case "pwd":
-          setOutput((prev) => [
-            ...prev,
-            { type: "output", text: getFullUrl(currentPath) },
-          ]);
+          addOutput(props.setOutput, {
+            type: "output",
+            text: getFullPath(props.currentPath),
+          });
           break;
 
         case "clear":
-          setOutput([]);
-          setShowContent(false);
+          props.setOutput([]);
+          props.setShowContent(false);
+          break;
+
+        case "help":
+          addOutput(props.setOutput, {
+            type: "output",
+            text: "",
+          });
+          props.setShowContent(true);
+          router.push("/help");
           break;
 
         case "":
           break;
 
         default:
-          setOutput((prev) => [
-            ...prev,
-            { type: "error", text: `command not found: ${cmd}` },
-          ]);
+          addOutput(props.setOutput, {
+            type: "error",
+            text: MESSAGES.COMMAND_NOT_FOUND(cmd),
+          });
       }
-
-      setInput("");
-      setShowAutocomplete(false);
     },
-    [
-      currentPath,
-      commandHistory,
-      setCurrentPath,
-      setOutput,
-      setCommandHistory,
-      setHistoryIndex,
-      setInput,
-      setShowAutocomplete,
-      setShowContent,
-    ],
+    [props, router],
   );
 
   return { executeCommand };

@@ -1,8 +1,15 @@
-import { BASE_URL, TERMINAL_CONFIG } from "@/constants/terminal/terminalConfig";
+import { TERMINAL_CONFIG } from "@/constants/terminal/terminalConfig";
 
-export const getFullUrl = (currentPath: string): string => {
-  if (currentPath === "~") return BASE_URL;
-  return `${BASE_URL}/${currentPath}`;
+type CurrentSuggestionProps = {
+  input: string;
+  showAutocomplete: boolean;
+  autocompleteOptions: string[];
+  autocompleteIndex: number;
+};
+
+export const getFullPath = (currentPath: string): string => {
+  if (currentPath === "~") return "~";
+  return `${currentPath}`;
 };
 
 export const getAutocompleteOptions = (input: string): string[] => {
@@ -22,12 +29,12 @@ export const getAutocompleteOptions = (input: string): string[] => {
   return [];
 };
 
-export const getCurrentSuggestion = (
-  input: string,
-  showAutocomplete: boolean,
-  autocompleteOptions: string[],
-  autocompleteIndex: number,
-): string => {
+export const getCurrentSuggestion = ({
+  input,
+  showAutocomplete,
+  autocompleteOptions,
+  autocompleteIndex,
+}: CurrentSuggestionProps): string => {
   if (!showAutocomplete || autocompleteOptions.length === 0) return "";
 
   const [cmd, ...args] = input.trim().split(" ");

@@ -1,11 +1,11 @@
 import { useCommandExecutor } from "@/hooks/terminal/useCommandExecutor";
 import { useInputHandlers } from "@/hooks/terminal/useInputHandlers";
 import { OutputLine } from "@/types/terminal";
-import {
-  getCurrentSuggestion,
-  getFullUrl,
-} from "@/utils/terminal/terminalUtils";
+import { getCurrentSuggestion } from "@/utils/terminal/terminalUtils";
 import { useState, useEffect, useRef } from "react";
+import TerminalLine from "./Terminal/TerminalLine";
+import { useSyncTerminalPath } from "@/hooks/terminal/useSyncTerminalPath";
+import TerminalHistoryPane from "./Terminal/TerminalHistoryPane";
 
 interface TerminalPaneProps {
   setShowContent: (show: boolean) => void;
@@ -22,6 +22,8 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   const [autocompleteIndex, setAutocompleteIndex] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useSyncTerminalPath({ setCurrentPath });
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -30,7 +32,6 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
 
   const { executeCommand } = useCommandExecutor({
     currentPath,
-    setCurrentPath,
     setOutput,
     commandHistory,
     setCommandHistory,
@@ -55,50 +56,17 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
     executeCommand,
   });
 
-  const suggestion = getCurrentSuggestion(
+  const suggestion = getCurrentSuggestion({
     input,
     showAutocomplete,
     autocompleteOptions,
     autocompleteIndex,
-  );
+  });
 
   return (
     <div className="flex flex-col items-left justify-start w-[70%] text-primary space-y-2 font-mono">
-      <div className="w-full max-h-96 overflow-y-auto space-y-1">
-        {output.map((line, index) => (
-          <>
-            {index % 2 === 0 && (
-              <div className="text-left">
-                <span className="text-link">Winxen</span> |{" "}
-                <span className="text-subtitle">{currentPath}</span> on{" "}
-                <a href="/" className="text-domain hover:underline">
-                  {getFullUrl(currentPath)}
-                </a>
-              </div>
-            )}
-            <p
-              key={index}
-              className={`text-left text-sm ${
-                line.type === "command"
-                  ? "text-primary"
-                  : line.type === "error"
-                    ? "text-error"
-                    : "text-suggestion"
-              }`}
-            >
-              {line.text}
-            </p>
-          </>
-        ))}
-      </div>
-
-      <div className="text-left">
-        <span className="text-link">Winxen</span> |{" "}
-        <span className="text-subtitle">{currentPath}</span> on{" "}
-        <a href="/" className="text-domain hover:underline">
-          {getFullUrl(currentPath)}
-        </a>
-      </div>
+      <TerminalHistoryPane currentPath={currentPath} output={output} />
+      <TerminalLine currentPath={currentPath} />
 
       <div className="relative">
         <div className="flex flex-row items-center space-x-2">

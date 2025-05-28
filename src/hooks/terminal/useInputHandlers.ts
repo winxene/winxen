@@ -1,128 +1,105 @@
 import { getAutocompleteOptions } from "@/utils/terminal/terminalUtils";
 import { useCallback } from "react";
 
-interface UseInputHandlersProps {
+type InputHandlersProps = {
   input: string;
-  setInput: (input: string) => void;
   commandHistory: string[];
   historyIndex: number;
-  setHistoryIndex: (index: number) => void;
   showAutocomplete: boolean;
-  setShowAutocomplete: (show: boolean) => void;
   autocompleteOptions: string[];
-  setAutocompleteOptions: (options: string[]) => void;
   autocompleteIndex: number;
+};
+
+interface UseInputHandlersProps extends InputHandlersProps {
+  setInput: (input: string) => void;
+  setHistoryIndex: (index: number) => void;
+  setShowAutocomplete: (show: boolean) => void;
+  setAutocompleteOptions: (options: string[]) => void;
   setAutocompleteIndex: (
     index: number | ((prevIndex: number) => number),
   ) => void;
   executeCommand: (command: string) => void;
 }
 
-export const useInputHandlers = ({
-  input,
-  setInput,
-  commandHistory,
-  historyIndex,
-  setHistoryIndex,
-  showAutocomplete,
-  setShowAutocomplete,
-  autocompleteOptions,
-  setAutocompleteOptions,
-  autocompleteIndex,
-  setAutocompleteIndex,
-  executeCommand,
-}: UseInputHandlersProps) => {
+export const useInputHandlers = (props: UseInputHandlersProps) => {
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setInput(value);
+      props.setInput(value);
 
       const options = getAutocompleteOptions(value);
-      setAutocompleteOptions(options);
-      setShowAutocomplete(options.length > 0 && value.trim().length > 0);
-      setAutocompleteIndex(0);
+      props.setAutocompleteOptions(options);
+      props.setShowAutocomplete(options.length > 0 && value.trim().length > 0);
+      props.setAutocompleteIndex(0);
     },
-    [
-      setInput,
-      setAutocompleteOptions,
-      setShowAutocomplete,
-      setAutocompleteIndex,
-    ],
+    [props],
   );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
         case "Enter":
-          executeCommand(input);
+          props.executeCommand(props.input);
           break;
 
         case "Tab":
           e.preventDefault();
-          if (autocompleteOptions.length > 0) {
-            const [cmd, ...args] = input.trim().split(" ");
-            let newInput: string;
+          if (props.autocompleteOptions.length > 0) {
+            const [cmd, ...args] = props.input.trim().split(" ");
+            const selectedOption =
+              props.autocompleteOptions[props.autocompleteIndex];
 
-            if (!args.length) {
-              newInput = autocompleteOptions[autocompleteIndex];
-            } else {
-              args[args.length - 1] = autocompleteOptions[autocompleteIndex];
-              newInput = [cmd, ...args].join(" ");
-            }
+            const newInput = !args.length
+              ? selectedOption
+              : [cmd, ...args.slice(0, -1), selectedOption].join(" ");
 
-            setInput(newInput);
-            setShowAutocomplete(false);
+            props.setInput(newInput);
+            props.setShowAutocomplete(false);
           }
           break;
 
         case "ArrowUp":
           e.preventDefault();
-          if (showAutocomplete) {
-            setAutocompleteIndex((prev) =>
-              prev > 0 ? prev - 1 : autocompleteOptions.length - 1,
+          if (props.showAutocomplete) {
+            props.setAutocompleteIndex((prev) =>
+              prev > 0 ? prev - 1 : props.autocompleteOptions.length - 1,
             );
-          } else if (commandHistory.length > 0) {
+          } else if (props.commandHistory.length > 0) {
             const newIndex =
-              historyIndex === -1
-                ? commandHistory.length - 1
-                : Math.max(0, historyIndex - 1);
-            setHistoryIndex(newIndex);
-            setInput(commandHistory[newIndex]);
+              props.historyIndex === -1
+                ? props.commandHistory.length - 1
+                : Math.max(0, props.historyIndex - 1);
+
+            props.setHistoryIndex(newIndex);
+            props.setInput(props.commandHistory[newIndex]);
           }
           break;
 
         case "ArrowDown":
           e.preventDefault();
-          if (showAutocomplete) {
-            setAutocompleteIndex(
-              (prev) => (prev + 1) % autocompleteOptions.length,
+          if (props.showAutocomplete) {
+            props.setAutocompleteIndex(
+              (prev) => (prev + 1) % props.autocompleteOptions.length,
             );
-          } else if (historyIndex !== -1) {
+          } else if (props.historyIndex !== -1) {
             const newIndex =
-              historyIndex < commandHistory.length - 1 ? historyIndex + 1 : -1;
-            setHistoryIndex(newIndex);
-            setInput(newIndex === -1 ? "" : commandHistory[newIndex]);
+              props.historyIndex < props.commandHistory.length - 1
+                ? props.historyIndex + 1
+                : -1;
+
+            props.setHistoryIndex(newIndex);
+            props.setInput(
+              newIndex === -1 ? "" : props.commandHistory[newIndex],
+            );
           }
           break;
 
         case "Escape":
-          setShowAutocomplete(false);
+          props.setShowAutocomplete(false);
           break;
       }
     },
-    [
-      input,
-      executeCommand,
-      autocompleteOptions,
-      autocompleteIndex,
-      setInput,
-      setShowAutocomplete,
-      showAutocomplete,
-      setAutocompleteIndex,
-      commandHistory,
-      historyIndex,
-      setHistoryIndex,
-    ],
+    [props],
   );
 
   return { handleInputChange, handleKeyDown };
