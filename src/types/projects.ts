@@ -5,7 +5,7 @@ export type projects = {
   projectCategory: ProjectCategory;
   role: string;
   yearAccomplished: string;
-  jobDescription: string;
+  jobDescriptions?: string;
   descriptions: string;
   techStack?: string[];
   imageLocation?: string[];
