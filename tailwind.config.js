@@ -27,6 +27,7 @@ module.exports = {
         domain: "#987ebc",
         domainAlt: "#958aac",
         error: "#fd0007",
+        errorAlt: "#d4323d",
         suggestion: "#727168",
         bg: "#1f1f29",
       },
