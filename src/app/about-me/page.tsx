@@ -14,6 +14,7 @@ import {
   EXPERIENCE_DATA,
 } from "@/constants/about-me/aboutMe";
 import { SocialLinks } from "@/components/ui/AboutMe/SocialLinks";
+import ColourPalette from "@/components/ui/AboutMe/ColourPalette";
 
 const ExperienceSection: FC<{ className?: string }> = ({ className = "" }) => (
   <div className={`flex flex-col space-y-8 text-sm lg:text-base ${className}`}>
@@ -96,6 +97,7 @@ const AboutMe: FC = () => {
                 <SocialLinks />
               </li>
             </ul>
+            <ColourPalette className="lg:hidden" />
           </div>
 
           <div className="flex flex-col space-y-4 text-left justify-center w-2/3">
@@ -106,6 +108,7 @@ const AboutMe: FC = () => {
               -----------------------------
             </p>
             <ExperienceSection className="hidden lg:block" />
+            <ColourPalette className="hidden lg:block" />
           </div>
         </div>
       </div>
