@@ -94,7 +94,7 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 mt-4">
+      <p className="text-xs text-suggestion mt-4">
         Type{" "}
         <a href="/help" className="font-bold hover:text-linkAlt">
           help
