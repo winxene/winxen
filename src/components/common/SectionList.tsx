@@ -1,4 +1,5 @@
 import { FC } from "react";
+import FormattedText from "./FormattedText";
 
 interface SectionListProps {
   title: string;
@@ -10,7 +11,9 @@ export const SectionList: FC<SectionListProps> = ({ title, items }) => (
     <p className="text-title">{title}:</p>
     <ul className="list-disc pl-6">
       {items.map((item, index) => (
-        <li key={index}>{item}</li>
+        <li key={index} className="text-sm lg:text-base">
+          <FormattedText text={item} />
+        </li>
       ))}
     </ul>
   </div>
