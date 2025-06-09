@@ -1,6 +1,10 @@
 import { Projects } from "@/types/projects";
 import { ProjectCategory } from "../enums/ProjectCategory";
 
+export const getAllProjects = () => {
+  return PROJECT_LISTS.map((project) => project.endpoint.replace("/", ""));
+};
+
 export const PROJECT_LISTS: Projects[] = [
   // Freelance Projects
   {
