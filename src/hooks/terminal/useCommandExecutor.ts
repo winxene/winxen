@@ -1,88 +1,94 @@
-import { getAllProjects } from "@/constants/projects/projects";
-import {
-  TERMINAL_CONFIG,
-  MESSAGES,
-  TERMINAL_HOME_PATH,
-} from "@/constants/terminal/terminalConfig";
-import { OutputLine } from "@/types/terminal";
-import {
-  getAvailableDirectories,
-  getFullPath,
-  normalizePath,
-} from "@/utils/terminal/terminalUtils";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { OutputLine } from "@/types/terminal";
+import {
+  addOutput,
+  handleLsCommand,
+  handleCdCommand,
+  handlePwdCommand,
+  handleClearCommand,
+  handleHelpCommand,
+  handleUnknownCommand,
+} from "./commandHandlers";
 
 type SetStateFn<T> = React.Dispatch<React.SetStateAction<T>>;
-type CommandProps = {
+
+interface UseCommandExecutorProps {
   currentPath: string;
   setOutput: SetStateFn<OutputLine[]>;
   commandHistory: string[];
   setCommandHistory: SetStateFn<string[]>;
-};
-
-interface UseCommandExecutorProps extends CommandProps {
   setHistoryIndex: (index: number) => void;
   setInput: (input: string) => void;
   setShowAutocomplete: (show: boolean) => void;
   setShowContent: (show: boolean) => void;
 }
 
-const addOutput = (setOutput: SetStateFn<OutputLine[]>, line: OutputLine) => {
-  setOutput((prev) => [...prev, line]);
+const updateCommandHistory = (
+  command: string,
+  commandHistory: string[],
+  setCommandHistory: SetStateFn<string[]>,
+): void => {
+  if (command && commandHistory[commandHistory.length - 1] !== command) {
+    setCommandHistory((prev) => [...prev, command]);
+  }
 };
 
-const resolvePath = (currentPath: string, targetPath: string): string => {
-  currentPath = normalizePath(currentPath);
-  targetPath = normalizePath(targetPath);
-
-  if (targetPath.startsWith("/")) {
-    return targetPath;
-  }
-
-  const segments = targetPath.split("/").filter(Boolean);
-
-  const currentSegments =
-    currentPath === "/" ? [] : currentPath.split("/").filter(Boolean);
-  let resultSegments = [...currentSegments];
-
-  for (const segment of segments) {
-    if (segment === "..") {
-      if (resultSegments.length > 0) {
-        resultSegments.pop();
-      }
-    } else if (segment === ".") {
-      continue;
-    } else {
-      resultSegments.push(segment);
-    }
-  }
-
-  return resultSegments.length === 0 ? "/" : "/" + resultSegments.join("/");
+const resetInputState = (
+  setHistoryIndex: (index: number) => void,
+  setInput: (input: string) => void,
+  setShowAutocomplete: (show: boolean) => void,
+): void => {
+  setHistoryIndex(-1);
+  setInput("");
+  setShowAutocomplete(false);
 };
 
-const isValidPath = (path: string): boolean => {
-  path = normalizePath(path);
-  const allProjects = getAllProjects();
+const displayCommand = (
+  command: string,
+  setOutput: SetStateFn<OutputLine[]>,
+): void => {
+  addOutput(setOutput, {
+    type: "command",
+    text: `$ ${command}`,
+  });
+};
 
-  if (path === "/" || path === TERMINAL_HOME_PATH) {
-    return true;
+const executeCommandLogic = (
+  cmd: string,
+  args: string[],
+  props: UseCommandExecutorProps,
+  router: ReturnType<typeof useRouter>,
+): void => {
+  const { currentPath, setOutput, setShowContent } = props;
+
+  switch (cmd.toLowerCase()) {
+    case "ls":
+      handleLsCommand(currentPath, setOutput);
+      break;
+
+    case "cd":
+      handleCdCommand(args, currentPath, setOutput, setShowContent, router);
+      break;
+
+    case "pwd":
+      handlePwdCommand(currentPath, setOutput);
+      break;
+
+    case "clear":
+      handleClearCommand(setOutput, setShowContent);
+      break;
+
+    case "help":
+      handleHelpCommand(setOutput, setShowContent, router);
+      break;
+
+    case "":
+      break;
+
+    default:
+      handleUnknownCommand(cmd, setOutput);
   }
-
-  if (path === "/projects") {
-    return true;
-  }
-
-  if (path.startsWith("/projects/")) {
-    const projectName = path.substring(10);
-    return allProjects.includes(projectName);
-  }
-
-  if (TERMINAL_CONFIG.endpoints?.some((endpoint) => path === `/${endpoint}`)) {
-    return true;
-  }
-
-  return false;
 };
 
 export const useCommandExecutor = (props: UseCommandExecutorProps) => {
@@ -93,109 +99,21 @@ export const useCommandExecutor = (props: UseCommandExecutorProps) => {
       const trimmedCommand = command.trim();
       const [cmd, ...args] = trimmedCommand.split(" ");
 
-      if (
-        trimmedCommand &&
-        props.commandHistory[props.commandHistory.length - 1] !== trimmedCommand
-      ) {
-        props.setCommandHistory((prev) => [...prev, trimmedCommand]);
-      }
+      updateCommandHistory(
+        trimmedCommand,
+        props.commandHistory,
+        props.setCommandHistory,
+      );
 
-      props.setHistoryIndex(-1);
-      props.setInput("");
-      props.setShowAutocomplete(false);
+      resetInputState(
+        props.setHistoryIndex,
+        props.setInput,
+        props.setShowAutocomplete,
+      );
 
-      addOutput(props.setOutput, {
-        type: "command",
-        text: `$ ${trimmedCommand}`,
-      });
+      displayCommand(trimmedCommand, props.setOutput);
 
-      switch (cmd.toLowerCase()) {
-        case "ls": {
-          const path = normalizePath(props.currentPath);
-          const availableDirectories = getAvailableDirectories(path);
-          if (availableDirectories.length > 0) {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: availableDirectories.join("  "),
-            });
-          } else {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.NO_ITEMS,
-            });
-          }
-          break;
-        }
-
-        case "cd": {
-          if (!args.length) {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.HOME_CHANGED,
-            });
-            router.push("/");
-          } else {
-            const targetPath = args.join(" ");
-            const resolvedPath = resolvePath(props.currentPath, targetPath);
-
-            if (isValidPath(resolvedPath)) {
-              const displayPath =
-                resolvedPath === "/" ? "home" : resolvedPath.substring(1);
-              addOutput(props.setOutput, {
-                type: "output",
-                text: MESSAGES.CHANGED_TO
-                  ? MESSAGES.CHANGED_TO(displayPath)
-                  : `Changed to ${displayPath}`,
-              });
-              router.push(resolvedPath);
-            } else {
-              const current = normalizePath(props.currentPath);
-              addOutput(props.setOutput, {
-                type: "error",
-                text: `Directory not found: ${targetPath}. Available: ${getAvailableDirectories(current).join(", ")}`,
-              });
-            }
-          }
-          props.setShowContent(true);
-          break;
-        }
-
-        case "pwd": {
-          const path = normalizePath(props.currentPath);
-          addOutput(props.setOutput, {
-            type: "output",
-            text: getFullPath(path),
-          });
-          break;
-        }
-
-        case "clear": {
-          props.setOutput([]);
-          props.setShowContent(false);
-          break;
-        }
-
-        case "help": {
-          addOutput(props.setOutput, {
-            type: "output",
-            text: "",
-          });
-          props.setShowContent(true);
-          router.push("/help");
-          break;
-        }
-
-        case "":
-          break;
-
-        default:
-          addOutput(props.setOutput, {
-            type: "error",
-            text: MESSAGES.COMMAND_NOT_FOUND
-              ? MESSAGES.COMMAND_NOT_FOUND(cmd)
-              : `Command not found: ${cmd}`,
-          });
-      }
+      executeCommandLogic(cmd, args, props, router);
     },
     [props, router],
   );
