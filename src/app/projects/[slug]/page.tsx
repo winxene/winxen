@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import TerminalPane from "@/components/ui/TerminalPane";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 import Carousel from "@/components/projects/carousel";
+import { getPublicationLinkDisplay } from "@/utils/link/getPublicationLinkDisplay";
 
 interface ProjectPageProps {
   params: {
@@ -90,18 +91,23 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <div className="text-primary text-sm lg:text-base">
               <p className="text-title font-bold">Project Link:</p>
               <ul className="list-disc pl-5">
-                {project.publicationLink.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-link hover:text-linkAlt"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
+                {project.publicationLink.map((link, index) => {
+                  const display = getPublicationLinkDisplay(link);
+                  if (!display) return null; // skip if undefined or null
+
+                  return (
+                    <li key={index}>
+                      <a
+                        href={display.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-link hover:text-linkAlt"
+                      >
+                        {display.text}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
