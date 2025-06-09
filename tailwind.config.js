@@ -5,6 +5,24 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "bg-[#1f1f29]",
+    "bg-[#d4323d]",
+    "bg-[#6e9565]",
+    "bg-[#c6a266]",
+    "bg-[#769ddd]",
+    "bg-[#958aac]",
+    "bg-[#5D9689]",
+    "bg-[#cbc08d]",
+    "bg-[#727168]",
+    "bg-[#fd0007]",
+    "bg-[#8fbc61]",
+    "bg-[#edc17a]",
+    "bg-[#6db6ce]",
+    "bg-[#987ebc]",
+    "bg-[#6CAA9F]",
+    "bg-[#ddd7b7]",
+  ],
   theme: {
     extend: {
       animation: {

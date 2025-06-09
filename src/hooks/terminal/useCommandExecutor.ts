@@ -1,31 +1,94 @@
-import {
-  TERMINAL_CONFIG,
-  MESSAGES,
-  TERMINAL_HOME_PATH,
-} from "@/constants/terminal/terminalConfig";
-import { OutputLine } from "@/types/terminal";
-import { getFullPath } from "@/utils/terminal/terminalUtils";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { OutputLine } from "@/types/terminal";
+import {
+  addOutput,
+  handleLsCommand,
+  handleCdCommand,
+  handlePwdCommand,
+  handleClearCommand,
+  handleHelpCommand,
+  handleUnknownCommand,
+} from "./commandHandlers";
 
 type SetStateFn<T> = React.Dispatch<React.SetStateAction<T>>;
 
-type CommandProps = {
+interface UseCommandExecutorProps {
   currentPath: string;
   setOutput: SetStateFn<OutputLine[]>;
   commandHistory: string[];
   setCommandHistory: SetStateFn<string[]>;
-};
-
-interface UseCommandExecutorProps extends CommandProps {
   setHistoryIndex: (index: number) => void;
   setInput: (input: string) => void;
   setShowAutocomplete: (show: boolean) => void;
   setShowContent: (show: boolean) => void;
 }
 
-const addOutput = (setOutput: SetStateFn<OutputLine[]>, line: OutputLine) => {
-  setOutput((prev) => [...prev, line]);
+const updateCommandHistory = (
+  command: string,
+  commandHistory: string[],
+  setCommandHistory: SetStateFn<string[]>,
+): void => {
+  if (command && commandHistory[commandHistory.length - 1] !== command) {
+    setCommandHistory((prev) => [...prev, command]);
+  }
+};
+
+const resetInputState = (
+  setHistoryIndex: (index: number) => void,
+  setInput: (input: string) => void,
+  setShowAutocomplete: (show: boolean) => void,
+): void => {
+  setHistoryIndex(-1);
+  setInput("");
+  setShowAutocomplete(false);
+};
+
+const displayCommand = (
+  command: string,
+  setOutput: SetStateFn<OutputLine[]>,
+): void => {
+  addOutput(setOutput, {
+    type: "command",
+    text: `$ ${command}`,
+  });
+};
+
+const executeCommandLogic = (
+  cmd: string,
+  args: string[],
+  props: UseCommandExecutorProps,
+  router: ReturnType<typeof useRouter>,
+): void => {
+  const { currentPath, setOutput, setShowContent } = props;
+
+  switch (cmd.toLowerCase()) {
+    case "ls":
+      handleLsCommand(currentPath, setOutput);
+      break;
+
+    case "cd":
+      handleCdCommand(args, currentPath, setOutput, setShowContent, router);
+      break;
+
+    case "pwd":
+      handlePwdCommand(currentPath, setOutput);
+      break;
+
+    case "clear":
+      handleClearCommand(setOutput, setShowContent);
+      break;
+
+    case "help":
+      handleHelpCommand(setOutput, setShowContent, router);
+      break;
+
+    case "":
+      break;
+
+    default:
+      handleUnknownCommand(cmd, setOutput);
+  }
 };
 
 export const useCommandExecutor = (props: UseCommandExecutorProps) => {
@@ -36,97 +99,21 @@ export const useCommandExecutor = (props: UseCommandExecutorProps) => {
       const trimmedCommand = command.trim();
       const [cmd, ...args] = trimmedCommand.split(" ");
 
-      if (
-        trimmedCommand &&
-        props.commandHistory[props.commandHistory.length - 1] !== trimmedCommand
-      ) {
-        props.setCommandHistory((prev) => [...prev, trimmedCommand]);
-      }
+      updateCommandHistory(
+        trimmedCommand,
+        props.commandHistory,
+        props.setCommandHistory,
+      );
 
-      props.setHistoryIndex(-1);
-      props.setInput("");
-      props.setShowAutocomplete(false);
+      resetInputState(
+        props.setHistoryIndex,
+        props.setInput,
+        props.setShowAutocomplete,
+      );
 
-      addOutput(props.setOutput, {
-        type: "command",
-        text: `$ ${trimmedCommand}`,
-      });
+      displayCommand(trimmedCommand, props.setOutput);
 
-      switch (cmd.toLowerCase()) {
-        case "ls":
-          if (props.currentPath === TERMINAL_HOME_PATH) {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: TERMINAL_CONFIG.endpoints.join("  "),
-            });
-          } else {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.NO_ITEMS,
-            });
-          }
-          break;
-
-        case "cd":
-          if (!args.length) {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.HOME_CHANGED,
-            });
-            window.location.replace("/");
-          } else if (args[0] === "..") {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.HOME_CHANGED,
-            });
-            router.back();
-          } else if (TERMINAL_CONFIG.endpoints.includes(args[0])) {
-            addOutput(props.setOutput, {
-              type: "output",
-              text: MESSAGES.CHANGED_TO(args[0]),
-            });
-            const targetPath = `/${args[0]}`;
-            router.push(targetPath);
-          } else {
-            addOutput(props.setOutput, {
-              type: "error",
-              text: MESSAGES.NO_DIRECTORY(args[0]),
-            });
-            router.push("/not-found");
-          }
-          props.setShowContent(true);
-          break;
-
-        case "pwd":
-          addOutput(props.setOutput, {
-            type: "output",
-            text: getFullPath(props.currentPath),
-          });
-          break;
-
-        case "clear":
-          props.setOutput([]);
-          props.setShowContent(false);
-          break;
-
-        case "help":
-          addOutput(props.setOutput, {
-            type: "output",
-            text: "",
-          });
-          props.setShowContent(true);
-          router.push("/help");
-          break;
-
-        case "":
-          break;
-
-        default:
-          addOutput(props.setOutput, {
-            type: "error",
-            text: MESSAGES.COMMAND_NOT_FOUND(cmd),
-          });
-      }
+      executeCommandLogic(cmd, args, props, router);
     },
     [props, router],
   );

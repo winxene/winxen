@@ -1,4 +1,4 @@
-import { getAutocompleteOptions } from "@/utils/terminal/terminalUtils";
+import { getAutocompleteOptions } from "@/utils/terminal/autocompleteUtils";
 import { useCallback } from "react";
 
 type InputHandlersProps = {
@@ -8,6 +8,7 @@ type InputHandlersProps = {
   showAutocomplete: boolean;
   autocompleteOptions: string[];
   autocompleteIndex: number;
+  currentPath?: string;
 };
 
 interface UseInputHandlersProps extends InputHandlersProps {
@@ -27,7 +28,7 @@ export const useInputHandlers = (props: UseInputHandlersProps) => {
       const value = e.target.value;
       props.setInput(value);
 
-      const options = getAutocompleteOptions(value);
+      const options = getAutocompleteOptions(value, props.currentPath);
       props.setAutocompleteOptions(options);
       props.setShowAutocomplete(options.length > 0 && value.trim().length > 0);
       props.setAutocompleteIndex(0);
@@ -69,7 +70,6 @@ export const useInputHandlers = (props: UseInputHandlersProps) => {
               props.historyIndex === -1
                 ? props.commandHistory.length - 1
                 : Math.max(0, props.historyIndex - 1);
-
             props.setHistoryIndex(newIndex);
             props.setInput(props.commandHistory[newIndex]);
           }
@@ -86,7 +86,6 @@ export const useInputHandlers = (props: UseInputHandlersProps) => {
               props.historyIndex < props.commandHistory.length - 1
                 ? props.historyIndex + 1
                 : -1;
-
             props.setHistoryIndex(newIndex);
             props.setInput(
               newIndex === -1 ? "" : props.commandHistory[newIndex],

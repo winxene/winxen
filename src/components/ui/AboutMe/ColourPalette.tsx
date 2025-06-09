@@ -1,12 +1,8 @@
 import { COLOURS } from "@/constants/about-me/aboutMe";
+import { extractColorCode } from "@/utils/regex/extractColourCode";
 import { FC, useState } from "react";
 
 const ColourPalette: FC<{ className?: string }> = ({ className = "" }) => {
-  const extractColorCode = (bgClass: string) => {
-    const match = bgClass.match(/#([0-9A-Fa-f]{6})/);
-    return match ? `#${match[1]}` : bgClass;
-  };
-
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = (colorClass: string, index: number) => {
