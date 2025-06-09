@@ -1,11 +1,11 @@
 import { useCommandExecutor } from "@/hooks/terminal/useCommandExecutor";
 import { useInputHandlers } from "@/hooks/terminal/useInputHandlers";
 import { OutputLine } from "@/types/terminal";
-import { getCurrentSuggestion } from "@/utils/terminal/terminalUtils";
 import { useState, useEffect, useRef } from "react";
 import TerminalLine from "./Terminal/TerminalLine";
 import TerminalHistoryPane from "./Terminal/TerminalHistoryPane";
 import { usePathname } from "next/navigation";
+import { getCurrentSuggestion } from "@/utils/terminal/autocompleteUtils";
 
 interface TerminalPaneProps {
   setShowContent: (show: boolean) => void;

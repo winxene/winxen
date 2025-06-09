@@ -1,4 +1,4 @@
-import { getAutocompleteOptions } from "@/utils/terminal/terminalUtils";
+import { getAutocompleteOptions } from "@/utils/terminal/autocompleteUtils";
 import { useCallback } from "react";
 
 type InputHandlersProps = {
