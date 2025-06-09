@@ -7,7 +7,7 @@ import {
   getAvailableDirectories,
   getFullPath,
 } from "@/utils/terminal/pathUtils";
-import { NextRouter } from "next/router";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 type SetOutputFn = React.Dispatch<React.SetStateAction<OutputLine[]>>;
 
@@ -40,7 +40,7 @@ export const handleCdCommand = (
   currentPath: string,
   setOutput: SetOutputFn,
   setShowContent: (show: boolean) => void,
-  router: NextRouter,
+  router: AppRouterInstance,
 ): void => {
   if (!args.length) {
     addOutput(setOutput, {
@@ -95,7 +95,7 @@ export const handleClearCommand = (
 export const handleHelpCommand = (
   setOutput: SetOutputFn,
   setShowContent: (show: boolean) => void,
-  router: NextRouter,
+  router: AppRouterInstance,
 ): void => {
   addOutput(setOutput, {
     type: "output",
