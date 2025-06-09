@@ -1,0 +1,15 @@
+export const PROGRAMMING_LANGUAGES = [
+  "Python",
+  "Dart",
+  "Swift",
+  "JavaScript",
+  "TypeScript",
+  "C++",
+  "C",
+  "Go",
+  "HTML",
+  "CSS",
+  "SQL",
+  "Dockerfile",
+  "Shell Scripting (Bash)",
+];
