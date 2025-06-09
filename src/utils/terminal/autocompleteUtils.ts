@@ -112,13 +112,7 @@ const addParentDirectorySuggestions = (
 
   const parentPattern = /^\.\.\/*/;
   if (parentPattern.test(partialName)) {
-    addMultiLevelParentSuggestion(
-      suggestions,
-      input,
-      currentPath,
-      pathPrefix,
-      partialName,
-    );
+    addMultiLevelParentSuggestion(suggestions, input, currentPath, pathPrefix);
   }
 };
 
