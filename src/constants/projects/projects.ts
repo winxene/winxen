@@ -221,7 +221,7 @@ export const PROJECT_LISTS: Projects[] = [
     ],
     publicationLink: [
       "https://youtu.be/hA1oPX0M67Y",
-      "https://drive.google.com/file/d/1f1p1TJNwOmcwxlGFbG4JEgFoJ0vgsGZ0/view?usp=drive_link",
+      "https://drive.google.com/file/d/1HQRL8HtZa-clbWGRtdNk-DmygwVQ8geQ/view?usp=sharing",
     ],
     imageLocation: [
       "/projects/automated-fertigation-iot/automated-fertigation-iot-1.png",
@@ -295,8 +295,8 @@ export const PROJECT_LISTS: Projects[] = [
       "A final-exam project for Mobile Application Development Engineering class focusing on user-friendly CRUD operations. Utilizes SQLite for local data storage, features automatic calendar date setting, data persistence, and both dark/light mode toggle. Completed in just one day due to family circumstances.",
     techStack: ["Flutter", "SQLite"],
     publicationLink: [
-      "https://youtu.be/APrTS-Mzp3g",
       "https://github.com/winxene/dummy-expense-app",
+      "https://youtu.be/APrTS-Mzp3g",
     ],
     imageLocation: [
       "/projects/simple-expense-app/simple-expense-app-1.png",
