@@ -1,3 +1,4 @@
+import { getPublicationLinkDisplay } from "@/utils/link/getPublicationLinkDisplay";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 
@@ -32,22 +33,6 @@ const ProjectCard: FC<ProjectCardProps> = ({
   const handleNavigation = (e: React.MouseEvent) => {
     e.stopPropagation();
     router.push(`/projects${link}`);
-  };
-
-  const getPublicationLinkDisplay = (url?: string) => {
-    if (!url) return null;
-
-    if (url.includes("medium.com")) {
-      return { text: "Medium", href: url };
-    } else if (url.includes("github.com")) {
-      return { text: "GitHub", href: url };
-    } else if (url.includes("figma.com")) {
-      return { text: "Figma", href: url };
-    } else if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      return { text: "YouTube", href: url };
-    } else {
-      return { text: "Website", href: url };
-    }
   };
 
   const publicationDisplay = getPublicationLinkDisplay(publicationLink);
