@@ -21,7 +21,6 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   const [autocompleteOptions, setAutocompleteOptions] = useState<string[]>([]);
   const [autocompleteIndex, setAutocompleteIndex] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
-
   const path = "~" + usePathname();
 
   useEffect(() => {
@@ -33,7 +32,7 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
     } else {
       setCurrentPath(path);
     }
-  }, []);
+  }, [path]);
 
   const { executeCommand } = useCommandExecutor({
     currentPath,
@@ -49,6 +48,7 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   const { handleInputChange, handleKeyDown } = useInputHandlers({
     input,
     setInput,
+    currentPath,
     commandHistory,
     historyIndex,
     setHistoryIndex,
@@ -72,7 +72,6 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
     <div className="flex flex-col items-left justify-start w-[70%] text-primary space-y-2 text-sm md:text-base">
       <TerminalHistoryPane currentPath={currentPath} output={output} />
       <TerminalLine currentPath={currentPath} />
-
       <div className="relative">
         <div className="flex flex-row items-center space-x-2">
           <p className="text-blue-400 text-left">→</p>
@@ -93,7 +92,6 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
           </div>
         </div>
       </div>
-
       <p className="text-xs text-suggestion mt-4">
         Type{" "}
         <a href="/help" className="font-bold hover:text-linkAlt">
