@@ -1,6 +1,7 @@
 import { ProjectCategory } from "@/constants/enums/ProjectCategory";
 
-export type projects = {
+export type Projects = {
+  endpoint: string;
   title: string;
   projectCategory: ProjectCategory;
   role: string;
