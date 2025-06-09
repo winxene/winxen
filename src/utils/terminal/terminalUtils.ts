@@ -52,12 +52,6 @@ export const getAutocompleteOptions = (
   return [];
 };
 
-const getParentPath = (currentPath: string): string => {
-  const segments = normalizePath(currentPath).split("/").filter(Boolean);
-  if (segments.length <= 1) return "/";
-  return "/" + segments.slice(0, -1).join("/");
-};
-
 const resolvePath = (currentPath: string, inputPath: string): string => {
   const current = normalizePath(currentPath);
 
@@ -65,13 +59,18 @@ const resolvePath = (currentPath: string, inputPath: string): string => {
     return normalizePath(inputPath);
   }
 
-  const segments = current.split("/").filter(Boolean);
+  const segments = current === "/" ? [] : current.split("/").filter(Boolean);
+
   const inputSegments = inputPath.split("/").filter(Boolean);
 
   for (const segment of inputSegments) {
     if (segment === "..") {
-      segments.pop();
-    } else if (segment !== ".") {
+      if (segments.length > 0) {
+        segments.pop();
+      }
+    } else if (segment === ".") {
+      continue;
+    } else {
       segments.push(segment);
     }
   }
@@ -115,17 +114,40 @@ const getCdAutocompleteOptions = (
     return dir;
   });
 
-  if (targetDir !== "/" && "..".startsWith(partialName.toLowerCase())) {
-    const parentSuggestion =
-      lastSlashIndex !== -1
-        ? input.substring(0, lastSlashIndex + 1) + ".."
-        : "..";
-    suggestions.unshift(parentSuggestion);
+  if (targetDir !== "/") {
+    if ("..".startsWith(partialName.toLowerCase())) {
+      const parentSuggestion =
+        lastSlashIndex !== -1
+          ? input.substring(0, lastSlashIndex + 1) + ".."
+          : "..";
+      suggestions.unshift(parentSuggestion);
+    }
+
+    const parentPattern = /^\.\.\/*/;
+    if (parentPattern.test(partialName)) {
+      const currentSegments =
+        normalizedCurrent === "/"
+          ? []
+          : normalizedCurrent.split("/").filter(Boolean);
+      const maxLevels = currentSegments.length;
+
+      const existingLevels = (partialName.match(/\.\./g) || []).length;
+
+      if (existingLevels < maxLevels) {
+        const additionalParent = partialName.endsWith("/") ? ".." : "/../..";
+        const fullSuggestion =
+          lastSlashIndex !== -1
+            ? input.substring(0, lastSlashIndex + 1) +
+              partialName +
+              additionalParent
+            : partialName + additionalParent;
+        suggestions.push(fullSuggestion);
+      }
+    }
   }
 
   return suggestions;
 };
-
 type CurrentSuggestionProps = {
   input: string;
   showAutocomplete: boolean;

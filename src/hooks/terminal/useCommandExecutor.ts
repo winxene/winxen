@@ -40,47 +40,25 @@ const resolvePath = (currentPath: string, targetPath: string): string => {
     return targetPath;
   }
 
-  if (targetPath === "..") {
-    if (currentPath === "/" || currentPath === TERMINAL_HOME_PATH) {
-      return "/";
+  const segments = targetPath.split("/").filter(Boolean);
+
+  const currentSegments =
+    currentPath === "/" ? [] : currentPath.split("/").filter(Boolean);
+  let resultSegments = [...currentSegments];
+
+  for (const segment of segments) {
+    if (segment === "..") {
+      if (resultSegments.length > 0) {
+        resultSegments.pop();
+      }
+    } else if (segment === ".") {
+      continue;
+    } else {
+      resultSegments.push(segment);
     }
-    if (currentPath.startsWith("/projects/")) {
-      return "/projects";
-    }
-    return "/";
   }
 
-  if (targetPath.startsWith("../")) {
-    const remainingPath = targetPath.substring(3);
-
-    if (currentPath === "/" || currentPath === TERMINAL_HOME_PATH) {
-      return `/${remainingPath}`;
-    }
-
-    if (currentPath.startsWith("/projects/")) {
-      return `/projects/${remainingPath}`;
-    }
-
-    if (
-      TERMINAL_CONFIG.endpoints?.some(
-        (endpoint) => currentPath === `/${endpoint}`,
-      )
-    ) {
-      return `/${remainingPath}`;
-    }
-
-    return `/${remainingPath}`;
-  }
-
-  if (currentPath === "/" || currentPath === TERMINAL_HOME_PATH) {
-    return `/${targetPath}`;
-  }
-
-  if (currentPath === "/projects") {
-    return `/projects/${targetPath}`;
-  }
-
-  return `/${targetPath}`;
+  return resultSegments.length === 0 ? "/" : "/" + resultSegments.join("/");
 };
 
 const isValidPath = (path: string): boolean => {
