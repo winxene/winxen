@@ -6,6 +6,36 @@ export const getAllProjects = () => {
 };
 
 export const PROJECT_LISTS: Projects[] = [
+  {
+    endpoint: "/memilah",
+    title: "Memilah",
+    projectCategory: ProjectCategory.WORK,
+    role: "Software Engineer (fullstack)",
+    yearAccomplished: "2024 - Now",
+    jobDescriptions: `- Develop an object detection ML model and reached 90% for waste classification.
+- Implement a web-based HMI for waste management system and dataset collector on embedded devices.
+- Build and optimise a RESTful backend waste database management and audit report generation.
+- Integrate various APIs for delivering detection results and managed version control.
+- Author comprehensive API documentations for backend services.
+`,
+    descriptions:
+      "AI-powered smart bin that sorts waste based on its category from the source using machine learning to prevent waste ends up in the landfills(https://memilah.com/).",
+    techStack: [
+      "Next.js",
+      "React.js",
+      "TailwindCSS",
+      "TypeScript",
+      "YOLO",
+      "Open CV",
+      "REST API",
+      "Go",
+      "Gin",
+      "Postman",
+      "Notion",
+    ],
+    publicationLink: ["https://memilah.com"],
+    imageLocation: ["/projects/memilah/memilah.png"],
+  },
   // Freelance Projects
   {
     endpoint: "/karcis-biz",
