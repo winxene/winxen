@@ -83,7 +83,7 @@ const Projects: FC = () => {
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base mx-auto">
           <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%]">
-            <TerminalHistoryPane currentPath={path} text="cd help" />
+            <TerminalHistoryPane currentPath={path} text="cd projects" />
           </div>
           <ReadmeCard>
             <div className="flex flex-col space-y-4 text-left justify-center">
