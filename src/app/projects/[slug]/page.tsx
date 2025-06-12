@@ -9,6 +9,7 @@ import TerminalPane from "@/components/ui/TerminalPane";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 import Carousel from "@/components/projects/carousel";
 import { getPublicationLinkDisplay } from "@/utils/link/getPublicationLinkDisplay";
+import FormattedText from "@/components/common/FormattedText";
 
 interface ProjectPageProps {
   params: {
@@ -121,7 +122,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           {showReadme ? "View Less" : "View More"}
         </button>
       )}
-      {showReadme && <ReadmeCard>{project.jobDescriptions}</ReadmeCard>}
+      {showReadme && (
+        <ReadmeCard>
+          <FormattedText text={project.jobDescriptions!} />
+        </ReadmeCard>
+      )}
       <TerminalPane setShowContent={setShowContent} />
     </PageLayout>
   );
