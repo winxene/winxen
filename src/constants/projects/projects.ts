@@ -8,6 +8,35 @@ export const getAllProjects = () => {
 export const PROJECT_LISTS: Projects[] = [
   // Freelance Projects
   {
+    endpoint: "/memilah",
+    title: "memilah",
+    projectCategory: ProjectCategory.WORK,
+    role: "Software Engineer (fullstack)",
+    yearAccomplished: "2024 - Now",
+    jobDescriptions:
+      "Spearheading the development of a real-time object detection system utilising YOLOv11, decreasing waste sorting errors by 15% and improving smart bin efficiency, featured across Jakarta events. Developing a web-based Human-Machine Interface (HMI) for a waste management system and data collection using React and TypeScript, serving 1000+ wastes. Building and optimising a RESTful backend for waste database management and audit report generation utilising Golang, Firebase, PostgreSQL, Docker, and Gin. Integrating various APIs to deliver detection results while managing version control with Python, MQTT, FastAPI, and Git. Authoring comprehensive API documentation for 5 modules to support system usability and integration.",
+    descriptions:
+      "A comprehensive ticketing platform built for event organisers. Implemented new payment gateway integration using Xendit, automated email notification system, and revamped the website's UI/UX design. Working closely with clients to optimize workflow and ensure seamless functionality across all features.",
+    techStack: [
+      "YOLOv11",
+      "MQTT",
+      "FastAPI",
+      "Golang",
+      "Gin",
+      "PostgreSQL",
+      "Firebase",
+      "Docker",
+      "React.js",
+      "TailwindCSS",
+      "TypeScript",
+      "REST API",
+      "Postman",
+      "Git",
+    ],
+    publicationLink: ["https://memilah.com"],
+    imageLocation: ["/projects/memilah/memilah-1.png"],
+  },
+  {
     endpoint: "/karcis-biz",
     title: "Karcis.biz",
     projectCategory: ProjectCategory.WORK,
