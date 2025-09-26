@@ -17,6 +17,8 @@ export const ACHIEVEMENTS_DATA = [
 ];
 
 export const CERTIFICATIONS_DATA = [
+  "2025: [Microsoft Certified: Azure AI Fundamentals](https://drive.google.com/file/d/1mUp9cQQFyh5QSU_o0p8Oi8hiGRUWwIyG/view)",
+  "2025: [Frontend Developer (React) by hackerrank](https://www.hackerrank.com/certificates/9a45eeb10db0)",
   "2022: [Alibaba Cloud Associate Cloud Computing](https://drive.google.com/file/d/1hCBIQboZBKmgwMOelnQlL3Nv-cH8rQvW/view)",
 ];
 
