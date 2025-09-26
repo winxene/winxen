@@ -1,22 +1,15 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import fetchApi from "../rest/fetch";
+import { getAccessToken } from "./getAccessToken";
 
 const SPOTIFY_BASE_URL = "https://api.spotify.com/v1";
 
 export const fetchTopSong = async (timeRange = "short_term", limit = 1) => {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.accessToken) {
-    throw new Error(
-      "No Spotify access token found. User might not be signed in.",
-    );
-  }
+  const accessToken = await getAccessToken();
 
   try {
     const response = await fetchApi(SPOTIFY_BASE_URL, "me/top/tracks", {
       headers: {
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       params: {
         limit: String(limit),
