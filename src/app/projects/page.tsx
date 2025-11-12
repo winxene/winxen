@@ -76,10 +76,7 @@ const Projects: FC = () => {
   };
 
   return (
-    <PageLayout
-      title="Projects - Winxen's Portfolio Terminal"
-      contentDescription="Winxen personal website. Contains projects and information about me."
-    >
+    <PageLayout>
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base mx-auto">
           <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%]">

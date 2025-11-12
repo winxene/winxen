@@ -11,10 +11,7 @@ const Help: FC = () => {
   const [showContent, setShowContent] = useState(true);
   const path = "~" + usePathname();
   return (
-    <PageLayout
-      title="Winxen's Portfolio Terminal"
-      contentDescription="Winxen personal website. Contains projects and information about me."
-    >
+    <PageLayout>
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base">
           <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%] mx-auto ">
