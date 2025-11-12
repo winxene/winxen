@@ -12,8 +12,6 @@ const Home: FC = () => {
 
   return (
     <PageLayout
-      title="Winxen's Portfolio Terminal"
-      contentDescription="Winxen personal website. Contains projects and information about me."
       hideDuringLoad
     >
       {showContent && (
