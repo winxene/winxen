@@ -33,20 +33,14 @@ const AboutMe: FC = () => {
 
   if (!showContent) {
     return (
-      <PageLayout
-        title="About Me - Winxen's Portfolio Terminal"
-        contentDescription="Highlights about Winxen, including experience, achievements, and certifications."
-      >
+      <PageLayout>
         <TerminalPane setShowContent={setShowContent} />
       </PageLayout>
     );
   }
 
   return (
-    <PageLayout
-      title="Winxen's Portfolio Terminal - 404 Not Found"
-      contentDescription="The page you are looking for does not exist."
-    >
+    <PageLayout>
       <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 md:my-0">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>

@@ -40,20 +40,14 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   if (!showContent) {
     return (
-      <PageLayout
-        title="About Me - Winxen's Portfolio Terminal"
-        contentDescription="Highlights about Winxen, including experience, achievements, and certifications."
-      >
+      <PageLayout>
         <TerminalPane setShowContent={setShowContent} />
       </PageLayout>
     );
   }
 
   return (
-    <PageLayout
-      title={`${project.title} - Winxen's Portfolio Website`}
-      contentDescription={project.descriptions}
-    >
+    <PageLayout>
       <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 md:my-0">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>

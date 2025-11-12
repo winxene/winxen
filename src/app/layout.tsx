@@ -9,6 +9,7 @@ export const metadata = {
     shortcut: "/favicons/favicon-16x16.png",
     apple: "/favicons/apple-touch-icon.png",
   },
+  robots: "index, follow",
 };
 
 export default function RootLayout({
@@ -18,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-bg text-primary">
         <LoadingProvider>{children}</LoadingProvider>
       </body>
     </html>
