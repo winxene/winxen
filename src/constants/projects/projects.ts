@@ -8,6 +8,28 @@ export const getAllProjects = () => {
 export const PROJECT_LISTS: Projects[] = [
   // Freelance Projects
   {
+    endpoint: "/expo-connect",
+    title: "Expo Connect",
+    projectCategory: ProjectCategory.WORK,
+    role: "Software Engineer (fullstack)",
+    yearAccomplished: "2025",
+    jobDescriptions:
+      "Develop a full-stack dashboard, demo, and landing page using PostgreSQL, SvelteKit, and ASP.NET to enhance product accessibility and user experience. Applied embeddings ML to improve matchmaking algorithms. Deploy and integrate the expoconnect.id domain, ensuring reliable uptime and smooth web access. Maintain and resolve bugs to improve system stability and optimise user workflows.",
+    descriptions:
+      "Expo Connect is a Visitor tracker & Exhibitor Interaction at B2B Expo & Exhibition with Actionable Results.",
+    techStack: [
+      "PostgreSQL",
+      "SvelteKit",
+      "ASP.NET",
+      "Embeddings ML",
+      "REST API",
+      "Docker",
+      "Git",
+    ],
+    publicationLink: ["https://expoconnect.id/"],
+    imageLocation: ["/projects/expo-connect/expo-connect-1.png"],
+  },
+  {
     endpoint: "/memilah",
     title: "memilah",
     projectCategory: ProjectCategory.WORK,

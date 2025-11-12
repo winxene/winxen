@@ -2,7 +2,7 @@ import { DEFAULT_TRACK_ID } from "@/constants/spotify/defaultTrack";
 import { FC, useEffect, useState } from "react";
 
 const SpotifyEmbed: FC = () => {
-  const [trackId, setTrackId] = useState(DEFAULT_TRACK_ID);
+  const [trackId, setTrackId] = useState("");
 
   useEffect(() => {
     const fetchTopTrack = async () => {
@@ -35,6 +35,7 @@ const SpotifyEmbed: FC = () => {
 
   return (
     <div>
+      {trackId && (
       <iframe
         className="rounded-xl items-center justify-center"
         src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0`}
@@ -44,6 +45,7 @@ const SpotifyEmbed: FC = () => {
         loading="lazy"
         title="Spotify Track Embed"
       />
+      )}
     </div>
   );
 };
