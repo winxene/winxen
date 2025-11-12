@@ -29,7 +29,7 @@ const Home: FC = () => {
                 . Currently learning mandarin and aiming to pass HSK 4.
               </p>
               <div className="flex flex-col pt-0 xl:pt-20 items-center space-y-0 xl:space-y-10 xl:items-start justify-center">
-                <p className="text-sm md:text-base"> My This Week's top jams:</p>
+                <p className="text-sm md:text-base"> My this week's top jam:</p>
                 <SpotifyEmbed />
               </div>
             </div>
