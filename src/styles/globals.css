@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-color: #1f1f29;
+  --text-color: #ddd7b7;
+}
+
+.light-mode {
+  --bg-color: #FDF6E3;
+  --text-color: #7F7E7A;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
