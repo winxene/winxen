@@ -8,8 +8,10 @@ import {
   handlePwdCommand,
   handleClearCommand,
   handleHelpCommand,
+  handleSwitchCommand,
   handleUnknownCommand,
 } from "./commandHandlers";
+import { useTheme } from "@/contexts/ThemeProvider";
 
 type SetStateFn<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -59,6 +61,7 @@ const executeCommandLogic = (
   args: string[],
   props: UseCommandExecutorProps,
   router: ReturnType<typeof useRouter>,
+  toggleTheme: () => void,
 ): void => {
   const { currentPath, setOutput, setShowContent } = props;
 
@@ -83,6 +86,10 @@ const executeCommandLogic = (
       handleHelpCommand(setOutput, setShowContent, router);
       break;
 
+    case "switch":
+      handleSwitchCommand(toggleTheme, setOutput);
+      break;
+
     case "":
       break;
 
@@ -93,6 +100,7 @@ const executeCommandLogic = (
 
 export const useCommandExecutor = (props: UseCommandExecutorProps) => {
   const router = useRouter();
+  const { toggleTheme } = useTheme();
 
   const executeCommand = useCallback(
     (command: string) => {
@@ -113,9 +121,9 @@ export const useCommandExecutor = (props: UseCommandExecutorProps) => {
 
       displayCommand(trimmedCommand, props.setOutput);
 
-      executeCommandLogic(cmd, args, props, router);
+      executeCommandLogic(cmd, args, props, router, toggleTheme);
     },
-    [props, router],
+    [props, router, toggleTheme],
   );
 
   return { executeCommand };
