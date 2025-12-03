@@ -46,6 +46,9 @@ const Help: FC = () => {
                 <li>
                   <span className="text-link">help</span>: shows this README.md.
                 </li>
+                <li>
+                  <span className="text-link">switch</span>: switch the theme.
+                </li>
               </ul>
 
               <p className="text-title mt-10">List of the pages:</p>

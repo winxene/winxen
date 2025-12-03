@@ -105,6 +105,17 @@ export const handleHelpCommand = (
   router.push("/help");
 };
 
+export const handleSwitchCommand = (
+  toggleTheme: () => void,
+  setOutput: SetOutputFn,
+): void => {
+  toggleTheme();
+  addOutput(setOutput, {
+    type: "output",
+    text: "Switched theme.",
+  });
+};
+
 export const handleUnknownCommand = (
   command: string,
   setOutput: SetOutputFn,

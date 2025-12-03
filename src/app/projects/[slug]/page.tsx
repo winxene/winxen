@@ -9,6 +9,7 @@ import TerminalPane from "@/components/ui/TerminalPane";
 import ReadmeCard from "@/components/ui/ReadmeCard";
 import Carousel from "@/components/projects/carousel";
 import { getPublicationLinkDisplay } from "@/utils/link/getPublicationLinkDisplay";
+import ReactMarkdown from "react-markdown";
 
 interface ProjectPageProps {
   params: {
@@ -115,7 +116,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           {showReadme ? "View Less" : "View More"}
         </button>
       )}
-      {showReadme && <ReadmeCard>{project.jobDescriptions}</ReadmeCard>}
+      {showReadme && (
+        <ReadmeCard>
+          <div className="prose prose-invert max-w-none">
+            <ReactMarkdown>{project.jobDescriptions}</ReactMarkdown>
+          </div>
+        </ReadmeCard>
+      )}
       <TerminalPane setShowContent={setShowContent} />
     </PageLayout>
   );

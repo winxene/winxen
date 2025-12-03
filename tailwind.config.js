@@ -35,7 +35,7 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: "#ddd7b7",
+        primary: "var(--text-color)",
         primaryAlt: "#cbc08d",
         title: "#edc17a",
         titleAlt: "#c6a266",
@@ -48,7 +48,7 @@ module.exports = {
         error: "#fd0007",
         errorAlt: "#d4323d",
         suggestion: "#727168",
-        bg: "#1f1f29",
+        bg: "var(--bg-color)",
       },
       fontFamily: {
         sans: ["MesloLGS NF", "ui-sans-serif", "system-ui", "sans-serif"],
@@ -65,5 +65,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
