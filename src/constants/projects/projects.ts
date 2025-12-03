@@ -13,8 +13,12 @@ export const PROJECT_LISTS: Projects[] = [
     projectCategory: ProjectCategory.WORK,
     role: "Software Engineer (fullstack)",
     yearAccomplished: "2025",
-    jobDescriptions:
-      "Develop a full-stack dashboard, demo, and landing page using PostgreSQL, SvelteKit, and ASP.NET to enhance product accessibility and user experience. Applied embeddings ML to improve matchmaking algorithms. Deploy and integrate the expoconnect.id domain, ensuring reliable uptime and smooth web access. Maintain and resolve bugs to improve system stability and optimise user workflows.",
+    jobDescriptions: `
+- Develop a full-stack dashboard, demo, and landing page using PostgreSQL, SvelteKit, and ASP.NET to enhance product accessibility and user experience.
+- Applied embeddings ML to improve matchmaking algorithms.
+- Deploy and integrate the expoconnect.id domain, ensuring reliable uptime and smooth web access.
+- Maintain and resolve bugs to improve system stability and optimise user workflows.
+`,
     descriptions:
       "Expo Connect is a Visitor tracker & Exhibitor Interaction at B2B Expo & Exhibition with Actionable Results.",
     techStack: [
@@ -35,8 +39,13 @@ export const PROJECT_LISTS: Projects[] = [
     projectCategory: ProjectCategory.WORK,
     role: "Software Engineer (fullstack)",
     yearAccomplished: "2024 - Now",
-    jobDescriptions:
-      "Spearheading the development of a real-time object detection system utilising YOLOv11, decreasing waste sorting errors by 15% and improving smart bin efficiency, featured across Jakarta events. Developing a web-based Human-Machine Interface (HMI) for a waste management system and data collection using React and TypeScript, serving 1000+ wastes. Building and optimising a RESTful backend for waste database management and audit report generation utilising Golang, Firebase, PostgreSQL, Docker, and Gin. Integrating various APIs to deliver detection results while managing version control with Python, MQTT, FastAPI, and Git. Authoring comprehensive API documentation for 5 modules to support system usability and integration.",
+    jobDescriptions: `
+- Spearheading the development of a real-time object detection system utilising YOLOv11, decreasing waste sorting errors by 15% and improving smart bin efficiency, featured across Jakarta events.
+- Developing a web-based Human-Machine Interface (HMI) for a waste management system and data collection using React and TypeScript, serving 1000+ wastes.
+- Building and optimising a RESTful backend for waste database management and audit report generation utilising Golang, Firebase, PostgreSQL, Docker, and Gin.
+- Integrating various APIs to deliver detection results while managing version control with Python, MQTT, FastAPI, and Git.
+- Authoring comprehensive API documentation for 5 modules to support system usability and integration.
+`,
     descriptions:
       "A comprehensive ticketing platform built for event organisers. Implemented new payment gateway integration using Xendit, automated email notification system, and revamped the website's UI/UX design. Working closely with clients to optimize workflow and ensure seamless functionality across all features.",
     techStack: [

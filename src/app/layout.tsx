@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import LoadingProvider from "@/contexts/LoadingProvider";
+import { ThemeProvider } from "@/contexts/ThemeProvider";
 
 export const metadata = {
   title: "Winxen's Portfolio Website",
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-bg text-primary">
-        <LoadingProvider>{children}</LoadingProvider>
+        <ThemeProvider>
+          <LoadingProvider>{children}</LoadingProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
