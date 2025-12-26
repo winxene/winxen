@@ -79,8 +79,8 @@ const Projects: FC = () => {
     <PageLayout>
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base mx-auto">
-          <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%]">
-            <TerminalHistoryPane currentPath={path} text="cd help" />
+          <div className="relative items-left justify-center space-y-0 top-24 lg:space-y-4 w-full">
+            <TerminalHistoryPane currentPath={path} text="cd projects" />
           </div>
           <ReadmeCard>
             <div className="flex flex-col space-y-4 text-left justify-center">
@@ -127,12 +127,12 @@ const Projects: FC = () => {
               </ul>
             </div>
           </ReadmeCard>
-          <div className="flex flex-col items-start justify-center w-[70%] mx-auto">
+          <div className="flex flex-col items-start justify-center w-full">
             <p>---------------</p>
             <p className="text-subtitle">Projects</p>
             <p>---------------</p>
           </div>
-          <div className="flex flex-col items-start justify-center w-[70%] mx-auto">
+          <div className="flex flex-col items-start justify-center w-full">
             {/* Work Projects */}
             {groupedProjects[ProjectCategory.WORK] && (
               <>
