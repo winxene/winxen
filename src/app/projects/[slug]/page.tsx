@@ -49,11 +49,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <PageLayout>
-      <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 md:my-0">
+      <div className="relative items-left justify-center lg:space-y-4 w-full mt-24">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>
 
-      <div className="flex flex-col items-start justify-center animate-fade-in-up w-[70%] space-y-0">
+      <div className="flex flex-col items-start justify-center animate-fade-in-up w-full space-y-0">
         {project.imageLocation && project.imageLocation.length > 0 && (
           <Carousel images={project.imageLocation} current={0} />
         )}

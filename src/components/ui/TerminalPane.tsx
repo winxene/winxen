@@ -69,7 +69,7 @@ const TerminalPane = ({ setShowContent }: TerminalPaneProps) => {
   });
 
   return (
-    <div className="flex flex-col items-left justify-start w-[70%] text-primary space-y-2 text-sm md:text-base">
+    <div className="flex flex-col items-left justify-start w-full text-primary space-y-2 text-sm md:text-base">
       <TerminalHistoryPane currentPath={currentPath} output={output} />
       <TerminalLine currentPath={currentPath} />
       <div className="relative">
