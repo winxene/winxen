@@ -41,7 +41,7 @@ const AboutMe: FC = () => {
 
   return (
     <PageLayout>
-      <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 md:my-0">
+      <div className="relative items-left justify-center lg:space-y-4 w-full mx-auto mt-24">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>
       <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full space-y-0">

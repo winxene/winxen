@@ -14,7 +14,7 @@ const Help: FC = () => {
     <PageLayout>
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base">
-          <div className="relative items-left justify-center space-y-0 top-24 md:top-0 lg:space-y-4 w-[70%] mx-auto ">
+          <div className="relative items-left justify-center space-y-0 top-24 lg:space-y-4 w-full max-w-7xl mx-auto ">
             <TerminalHistoryPane currentPath={path} text="cd help" />
           </div>
           <ReadmeCard>

@@ -49,7 +49,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <PageLayout>
-      <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 md:my-0">
+      <div className="relative items-left justify-center lg:space-y-4 w-[70%] mx-auto mt-24 ">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>
 
