@@ -41,7 +41,7 @@ const AboutMe: FC = () => {
 
   return (
     <PageLayout>
-      <div className="relative items-left justify-center lg:space-y-4 w-full mx-auto mt-24">
+      <div className="relative items-left justify-center lg:space-y-4 w-full mt-24">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>
       <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full space-y-0">
@@ -52,7 +52,7 @@ const AboutMe: FC = () => {
           <p className="space-y-10">-----------------------------</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start justify-between mx-0 lg:mx-3 my-24 w-3/5 md:mt-20 md:mx-auto text-sm md:text-base space-x-4 lg:space-x-20 py-10 lg:py-20">
+        <div className="flex flex-col lg:flex-row items-start justify-between my-24 w-full text-sm md:text-base space-x-4 lg:space-x-20 py-10 lg:py-20">
           <div className="flex flex-col space-y-20 text-left justify-center min-w-fit lg:w-1/3">
             <Image
               src="/winxen.jpg"
