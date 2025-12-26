@@ -1,4 +1,5 @@
 import { DEFAULT_TRACK_ID } from "@/constants/spotify/defaultTrack";
+import { useTheme } from "@/contexts/ThemeProvider";
 import { FC, useEffect, useState } from "react";
 
 const SpotifyEmbed: FC = () => {
@@ -33,18 +34,19 @@ const SpotifyEmbed: FC = () => {
     fetchTopTrack();
   }, []);
 
+  const { theme } = useTheme();
+  const spotifyTheme = theme === "light" ? "1" : "0";
+
   return (
-    <div>
+    <div className="w-full max-w-md xl:max-w-none h-[152px]">
       {trackId && (
-      <iframe
-        className="rounded-xl items-center justify-center"
-        src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0`}
-        width="100%"
-        height="152"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Spotify Track Embed"
-      />
+        <iframe
+          className="rounded-xl w-full transition-all duration-300 border-0"
+          src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=${spotifyTheme}`}
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Spotify Track Embed"
+        />
       )}
     </div>
   );

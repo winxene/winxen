@@ -44,14 +44,14 @@ const AsciiArt: FC<AsciiArtProps> = ({ src }: AsciiArtProps) => {
 
     revealLine();
 
-    return () => {};
+    return () => { };
   }, [asciiArt]);
 
   const handleToggle = () => setIsColor((prev) => !prev);
 
   return (
     <pre
-      className="text-[5px] text-center lg:text-xs whitespace-pre-wrap cursor-pointer"
+      className="text-[5px] text-center lg:text-xs whitespace-pre select-none cursor-pointer overflow-visible"
       onClick={handleToggle}
       title="Toggle color/plain"
     >
