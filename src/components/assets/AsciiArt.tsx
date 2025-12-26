@@ -51,7 +51,7 @@ const AsciiArt: FC<AsciiArtProps> = ({ src }: AsciiArtProps) => {
 
   return (
     <pre
-      className="text-[5px] text-center lg:text-xs whitespace-pre select-none cursor-pointer overflow-visible"
+      className="text-[5px] text-center lg:text-[10px] 2xl:text-xs whitespace-pre select-none cursor-pointer overflow-visible"
       onClick={handleToggle}
       title="Toggle color/plain"
     >

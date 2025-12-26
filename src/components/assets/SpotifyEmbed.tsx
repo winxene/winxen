@@ -4,6 +4,17 @@ import { FC, useEffect, useState } from "react";
 
 const SpotifyEmbed: FC = () => {
   const [trackId, setTrackId] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if screen is mobile (< 768px)
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const fetchTopTrack = async () => {
@@ -38,14 +49,17 @@ const SpotifyEmbed: FC = () => {
   const spotifyTheme = theme === "light" ? "1" : "0";
 
   return (
-    <div className="w-full max-w-md xl:max-w-none h-[152px]">
+    <div className="w-full max-w-md overflow-hidden rounded-xl shadow-lg">
       {trackId && (
         <iframe
-          className="rounded-xl w-full transition-all duration-300 border-0"
+          style={{ borderRadius: "12px" }}
           src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=${spotifyTheme}`}
+          width="100%"
+          height={isMobile ? "80" : "152"}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           title="Spotify Track Embed"
+          className="border-0"
         />
       )}
     </div>
