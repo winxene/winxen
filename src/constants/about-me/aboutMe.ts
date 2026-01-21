@@ -5,7 +5,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export const EXPERIENCE_DATA = [
-  "2024 - Now: Work as a freelancer and as a full-stack developer at [Memilah](https://memilah.com), an AI waste bin solution.",
+  "2026: Currently working as a Project Management Officer at [iglo](https://www.indocyber.co.id/)",
+  "2024 - 2025: Worked as a freelancer and as a full-stack developer at [Memilah](https://memilah.com), an AI waste bin solution.",
   "2023: Part of Cohort 6 at [Apple Developer Academy @BINUS](https://drive.google.com/file/d/11c0XfrySNMgFQeyComd7UgX65gcnehIR/view?usp=drive_link).",
   "2021 - 2022: Actively involved in [BNCC](https://bncc.net/), [IEEE Student Branch @BINUS](https://ieee.binus.ac.id/), Freshmen Leader, and Freshmen Partner for Engineering Faculty.",
 ];
