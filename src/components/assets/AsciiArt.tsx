@@ -51,7 +51,7 @@ const AsciiArt: FC<AsciiArtProps> = ({ src }: AsciiArtProps) => {
 
   return (
     <pre
-      className="text-[5px] text-center lg:text-[10px] 2xl:text-xs whitespace-pre select-none cursor-pointer overflow-visible"
+      className="font-mono text-[7px] leading-none text-center md:text-[8px] lg:text-[10px] 2xl:text-xs whitespace-pre select-none cursor-pointer overflow-visible"
       onClick={handleToggle}
       title="Toggle color/plain"
     >
@@ -62,7 +62,7 @@ const AsciiArt: FC<AsciiArtProps> = ({ src }: AsciiArtProps) => {
           ? colorClasses[Math.min(segment, colorClasses.length - 1)]
           : "";
         return (
-          <span key={idx} className={`${colorClass} font-bold`}>
+          <span key={idx} className={colorClass}>
             {line}
             {"\n"}
           </span>
