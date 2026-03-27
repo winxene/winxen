@@ -51,7 +51,8 @@ module.exports = {
         bg: "var(--bg-color)",
       },
       fontFamily: {
-        sans: ["MesloLGS NF", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["MesloLGS NF", "MesloLGS Nerd Font", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["MesloLGS NF", "MesloLGS Nerd Font", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
       },
       keyframes: {
         "fade-in-up": {
