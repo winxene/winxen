@@ -9,7 +9,7 @@ const Header: FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="fixed min-w-full flex flex-row px-[20%] py-4 bg-bg space-x-5 md:space-x-auto justify-between items-center top-0 shadow-md z-50">
+    <header className="fixed min-w-full flex flex-row px-6 md:px-[20%] py-3 md:py-4 bg-bg gap-2 md:gap-0 justify-between items-center top-0 shadow-md z-50">
       <a
         href="/"
         className="text-xl md:text-3xl font-bold text-title hover:text-titleAlt"
@@ -17,7 +17,7 @@ const Header: FC = () => {
         Winxen
       </a>
       <nav>
-        <ul className="flex space-x-4 text-sm md:text-xl md:space-x-12 font-normal text-primary items-center">
+        <ul className="flex space-x-3 md:space-x-12 text-sm md:text-xl font-normal text-primary items-center">
           <li>
             <a href="/about-me" className="hover:text-primaryAlt">
               About Me
