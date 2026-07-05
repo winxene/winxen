@@ -79,7 +79,7 @@ const Projects: FC = () => {
     <PageLayout>
       {showContent && (
         <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full text-sm md:text-base mx-auto">
-          <div className="relative items-left justify-center space-y-0 top-24 lg:space-y-4 w-full">
+          <div className="items-left justify-center space-y-0 mt-16 lg:mt-24 lg:space-y-4 w-full">
             <TerminalHistoryPane currentPath={path} text="cd projects" />
           </div>
           <ReadmeCard>

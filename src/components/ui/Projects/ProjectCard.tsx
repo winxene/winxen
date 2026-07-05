@@ -39,7 +39,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
 
   return (
     <div
-      className="flex flex-col w-[280px] lg:w-[320px] h-auto mx-auto my-6 border border-suggestion rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-200 text-sm lg:text-base"
+      className="flex flex-col w-[280px] lg:w-[320px] h-auto mx-auto my-3 lg:my-6 border border-suggestion rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-200 text-sm lg:text-base"
       onClick={handleCardClick}
     >
       <div className="h-[160px] overflow-hidden">
