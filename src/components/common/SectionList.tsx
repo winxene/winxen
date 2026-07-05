@@ -7,7 +7,7 @@ interface SectionListProps {
 }
 
 export const SectionList: FC<SectionListProps> = ({ title, items }) => (
-  <div className="space-y-8">
+  <div className="space-y-2 md:space-y-3">
     <p className="text-title">{title}:</p>
     <ul className="list-disc pl-6">
       {items.map((item, index) => (

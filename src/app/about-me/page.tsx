@@ -41,7 +41,7 @@ const AboutMe: FC = () => {
 
   return (
     <PageLayout>
-      <div className="relative items-left justify-center lg:space-y-4 w-full mt-24">
+      <div className="relative items-left justify-center lg:space-y-4 w-full mt-16 lg:mt-24">
         <TerminalHistoryPane currentPath={path} text={commandText} />
       </div>
       <div className="flex flex-col items-center justify-center animate-fade-in-up min-w-full space-y-0">
@@ -52,8 +52,8 @@ const AboutMe: FC = () => {
           <p className="space-y-10">-----------------------------</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start justify-between my-24 w-full text-sm md:text-base space-x-4 lg:space-x-20 py-10 lg:py-20">
-          <div className="flex flex-col space-y-20 text-left justify-center min-w-fit lg:w-1/3">
+        <div className="flex flex-col lg:flex-row items-start justify-between my-12 lg:my-24 w-full text-sm md:text-base space-x-4 lg:space-x-20 py-4 lg:py-20">
+          <div className="flex flex-col space-y-8 lg:space-y-20 text-left justify-center min-w-fit lg:w-1/3">
             <Image
               src="/winxen.jpg"
               alt="Winxen's picture"
@@ -63,7 +63,7 @@ const AboutMe: FC = () => {
               priority
             />
             <ExperienceSection className="lg:hidden" />
-            <ul className="list-none space-y-4 lg:space-y-24">
+            <ul className="list-none space-y-6 lg:space-y-24">
               <li className="space-y-5">
                 <p className="text-title">Skills and Techstacks</p>
                 <p>
